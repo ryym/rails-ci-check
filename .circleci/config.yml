@@ -3,7 +3,7 @@ version: 2
 jobs:
   test-rails:
     docker:
-      - image: circleci/ruby:2.6.0-node
+      - image: circleci/ruby:2.6.0
         environment:
           RAILS_ENV: test
           BUNDLE_JOBS: 3
