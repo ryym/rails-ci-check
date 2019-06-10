@@ -5,6 +5,7 @@ FROM ruby:2.6.0
 WORKDIR /repo
 
 ENV BUNDLE_PATH='vendor/bundle'
+ENV GEM_HOME='vendor/bundle'
 
 COPY Gemfile Gemfile.lock /repo/
 RUN gem install bundler
