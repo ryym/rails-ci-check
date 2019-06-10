@@ -1,24 +1,24 @@
-# README
+CircleCI で Rails のテストを実行しようとするとなぜか以下のエラーになってしまうので、その原因調査のために作ったリポジトリ。
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+<https://circleci.com/gh/ryym/rails-ci-check/4>
 
-Things you may want to cover:
+```bash
+$ #!/bin/bash -eo pipefail
+bundle exec rails test
 
-* Ruby version
+Could not find concurrent-ruby-1.1.5 in any of the sources
+Run `bundle install` to install missing gems.
+Exited with code 1
+```
 
-* System dependencies
+もちろん`bundle install`は実行しているのに、`rails test`するとこのエラーになる。
+既存プロジェクトの問題かと思っていたが、`rails new`しただけのこのリポジトリでも同じエラーが起きた。
 
-* Configuration
+`BUNDLE_PATH`を指定するとこのエラーが起きる。`bundle install`結果をキャッシュするためにパスを指定したい。
 
-* Database creation
+で試しにローカルで Docker 立ち上げて試してみると同じエラーになった。 CircleCI じゃなくて Docker 環境で起きる問題だった。
+その後ググってたどり着いた Stackoverflow で以下のワークアラウンドを見つけ、試したところテストが通るようになった。
 
-* Database initialization
+<https://stackoverflow.com/a/55202645/7222928>
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+commit: https://github.com/ryym/rails-ci-check/commit/e94dedaa07967b65a8a6c052bc1b4942de53a069
