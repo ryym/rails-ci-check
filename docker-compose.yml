@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  rails:
+    image: ruby:2.6.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/repo
+      - bundle:/repo/vendor/bundle
+    ports:
+      - '3000:3000'
+    command: bundle exec rails s -b '0.0.0.0'
+
+volumes:
+  bundle:
+    driver: local
